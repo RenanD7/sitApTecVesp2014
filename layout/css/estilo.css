@@ -1,0 +1,17 @@
+/* 
+    Created on : 20/10/2014, 15:59:33
+    Author     : Eu, xisde
+    Exemplo didático da utlização de Media Queries
+*/
+
+@media screen and (orientation: portrait){
+    /*Modo retratato - vertical*/
+    .horizontal{display: none;}
+    .vertical{display: block;}
+}
+
+@media screen and (orientation: landscape){
+    /*Modo paisagem - horizontal*/
+    .horizontal{display: block;}
+    .vertical{display: none;}
+}
