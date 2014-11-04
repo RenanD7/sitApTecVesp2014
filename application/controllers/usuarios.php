@@ -3,18 +3,18 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pessoas extends CI_Controller {
+class Usuarios extends CI_Controller {
 
     function __construct() {
         parent::__construct();
         /* Carrega o modelo */
-        $this->load->model('pessoas_model');
+        $this->load->model('usuarios_model');
     }
 
     function index() {
-        $data['titulo'] = "CRUD com CodeIgniter | Cadastro de Pessoas";
-        $data['pessoas'] = $this->pessoas_model->listar();
-        $this->load->view('pessoas_view.php', $data);
+        $data['titulo'] = "CRUD com CodeIgniter | Cadastro de Usuarios";
+        $data['usuarios'] = $this->usuarios_model->listar();
+        $this->load->view('usuarios_view.php', $data);
     }
 
     function inserir() {
@@ -47,104 +47,106 @@ class Pessoas extends CI_Controller {
             
 
             /* Carrega o modelo */
-            $this->load->model('pessoas_model');
+            //$this->load->model('usuarios_model');
 
             /* Chama a função inserir do modelo */
-            if ($this->pessoas_model->inserir($data)) {
-                redirect('pessoas');
+            if ($this->usuarios_model->inserir($data)) {
+                redirect('usuarios');
             } else {
                 log_message('error', 'Erro ao inserir o usuário.');
             }
         }
     }
 
-    function editar($id) {
+    function editar($idUsuario) {
 
         /* Aqui vamos definir o titulo da página de edição */
-        $data['titulo'] = "CRUD com CodeIgniter | Editar Pessoa";
+        $data['titulo'] = "CRUD com CodeIgniter | Editar Usuario";
 
         /* Carrega o modelo */
-        $this->load->model('pessoas_model');
+        //$this->load->model('usuarios_model');
 
         /* Busca os dados da pessoa que será editada (id) */
-        $data['dados_pessoa'] = $this->pessoas_model->editar($id);
+        $data['dados_usuario'] = $this->usuarios_model->editar($idUsuario);
 
         /* Carrega a p�gina de edi��o com os dados da pessoa */
-        $this->load->view('pessoas_edit', $data);
+        $this->load->view('usuarios_edit', $data);
     }
 
     function atualizar() {
 
-        /* Carrega a biblioteca do CodeIgniter respons�vel pela valida��o dos formul�rios */
+        /* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
         $this->load->library('form_validation');
 
         /* Define as tags onde a mensagem de erro ser� exibida na p�gina */
         $this->form_validation->set_error_delimiters('<span>', '</span>');
 
-        /* Aqui estou definindo as regras de valida��o do formul�rio, assim como 
-          na fun��o inserir do controlador, por�m estou mudando a forma de escrita */
+        /* Aqui estou definindo as regras de validação do formulário, assim como 
+          na função inserir do controlador, porém estou mudando a forma de escrita */
         $validations = array(
             array(
                 'field' => 'nome',
                 'label' => 'Nome',
-                'rules' => 'trim|required|max_length[40]'
+                'rules' => 'trim|max_length[40]'
             ),
             array(
                 'field' => 'senha',
                 'label' => 'Senha',
-                'rules' => 'trim|required|max_length[100]'
+                'rules' => 'trim|max_length[20]'
             ),
             array(
                 'field' => 'email',
                 'label' => 'E-mail',
-                'rules' => 'trim|required|valid_email|max_length[100]'
+                'rules' => 'trim|valid_email|max_length[70]'
             ),
             array(
                 'field' => 'foto',
                 'label' => 'Foto',
-                'rules' => 'trim|required|max_length[100]'
+                'rules' => 'trim|max_length[100]'
             ),
             array(
-                'field' => 'Endereço',
+                'field' => 'endereço',
                 'label' => 'Endereço',
-                'rules' => 'trim|required|max_length[50]'
-            ),
+                'rules' => 'trim|max_length[50]'
+            )
         );
         $this->form_validation->set_rules($validations);
 
         /* Executa a valida��o... */
         if ($this->form_validation->run() === FALSE) {
-            /* Caso houver erro chama fun��o editar do controlador novamente */
-            $this->editar($this->input->post('id'));
+            /* Caso houver erro chama função editar do controlador novamente */
+           // echo 'falho a validação: ' . $this->input->post('idusuario') . $this->input->post('nome'); die();
+            $this->editar($this->input->post('idusuario'));
         } else {
-            /* Sen�o obt�m os dados do formul�rio */
-            $data['id'] = $this->input->post('id');
+            /* Senão obtém os dados do formulário */
+            //  echo 'validado'; die();
+            $data['idUsuario'] = $this->input->post('idusuario');
             $data['nome'] = ucwords($this->input->post('nome'));
             $data['email'] = strtolower($this->input->post('email'));
 
             /* Carrega o modelo */
-            $this->load->model('pessoas_model');
+            //$this->load->model('usuarios_model');
 
-            /* Executa a fun��o atualizar do modelo passando como par�metro os dados obtidos do formul�rio */
-            if ($this->pessoas_model->atualizar($data)) {
-                /* Caso sucesso ao atualizar, recarrega a p�gina principal */
-                redirect('pessoas');
+            /* Executa a função atualizar do modelo passando como parâmetro os dados obtidos do formulário */
+            if ($this->usuarios_model->atualizar($data)) {
+                /* Caso sucesso ao atualizar, recarrega a página principal */
+                redirect('usuarios');
             } else {
-                /* Sen�o exibe a mensagem de erro */
+                /* Senão exibe a mensagem de erro */
                 log_message('error', 'Erro ao atualizar o usuário.');
             }
         }
     }
 
-    function deletar($id) {
+    function deletar($idUsuario) {
 
         /* Carrega o modelo */
-        $this->load->model('pessoas_model');
+        //$this->load->model('pessoas_model');
 
         /* Executa a fun��o deletar do modelo passando como par�metro o id da pessoa */
-        if ($this->pessoas_model->deletar($id)) {
+        if ($this->usuarios_model->deletar($idUsuario)) {
             /* Caso sucesso ao atualizar, recarrega a p�gina principal */
-            redirect('pessoas');
+            redirect('usuarios');
         } else {
             /* Sen�o exibe a mensagem de erro */
             log_message('error', 'Erro ao deletar o usuário.');
@@ -152,3 +154,5 @@ class Pessoas extends CI_Controller {
     }
 
 }
+/* End of file usuarios.php*/
+/* Location ./application/controllers/usuarios.php */
