@@ -16,7 +16,7 @@ class Usuarios_model extends CI_Model {
 
     function listar() {
         //Listagem da tabela usuario
-        $query = $this->db->get('usuario');
+        $query = $this->db->order_by('nome','asc')->get('usuario');
         return $query->result();
     }
 
@@ -37,6 +37,5 @@ class Usuarios_model extends CI_Model {
         return $this->db->delete('usuario');
     }
 }
-
 /* End of file usuarios_model.php */
 /* Location ./application/views/usuarios_model.php */

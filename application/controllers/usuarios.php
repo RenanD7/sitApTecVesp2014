@@ -4,7 +4,6 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Usuarios extends CI_Controller {
-
     function __construct() {
         parent::__construct();
         /* Carrega o modelo */
@@ -18,20 +17,15 @@ class Usuarios extends CI_Controller {
     }
 
     function inserir() {
-
         /* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
         $this->load->library('form_validation');
-
         /* Define as tags onde a mensagem de erro sera exibida na página */
         $this->form_validation->set_error_delimiters('<span>', '</span>');
-
         /* Define as regras para valida��o */
         $this->form_validation->set_rules('nome', 'Nome', 'required|max_length[40]');
         $this->form_validation->set_rules('senha', 'Senha', 'required|max_length[40]');
         $this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email|max_length[100]');
         $this->form_validation->set_rules('telefone', 'Telefone', 'required|max_length[12]');
-        
-        
         /* Executa a validação e caso houver erro... */
         if ($this->form_validation->run() === FALSE) {
             /* Chama a função index do controlador */
@@ -44,11 +38,8 @@ class Usuarios extends CI_Controller {
             $data['email'] = $this->input->post('email');
             $data['foto'] = $this->input->post('foto');
             $data['telefone'] = $this->input->post('telefone');
-            
-
             /* Carrega o modelo */
             //$this->load->model('usuarios_model');
-
             /* Chama a função inserir do modelo */
             if ($this->usuarios_model->inserir($data)) {
                 redirect('usuarios');
@@ -59,28 +50,21 @@ class Usuarios extends CI_Controller {
     }
 
     function editar($idUsuario) {
-
         /* Aqui vamos definir o titulo da página de edição */
         $data['titulo'] = "CRUD com CodeIgniter | Editar Usuario";
-
         /* Carrega o modelo */
         //$this->load->model('usuarios_model');
-
         /* Busca os dados da pessoa que será editada (id) */
         $data['dados_usuario'] = $this->usuarios_model->editar($idUsuario);
-
         /* Carrega a p�gina de edi��o com os dados da pessoa */
         $this->load->view('usuarios_edit', $data);
     }
 
     function atualizar() {
-
         /* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
         $this->load->library('form_validation');
-
         /* Define as tags onde a mensagem de erro ser� exibida na p�gina */
         $this->form_validation->set_error_delimiters('<span>', '</span>');
-
         /* Aqui estou definindo as regras de validação do formulário, assim como 
           na função inserir do controlador, porém estou mudando a forma de escrita */
         $validations = array(
@@ -111,7 +95,6 @@ class Usuarios extends CI_Controller {
             )
         );
         $this->form_validation->set_rules($validations);
-
         /* Executa a valida��o... */
         if ($this->form_validation->run() === FALSE) {
             /* Caso houver erro chama função editar do controlador novamente */
@@ -122,11 +105,12 @@ class Usuarios extends CI_Controller {
             //  echo 'validado'; die();
             $data['idUsuario'] = $this->input->post('idusuario');
             $data['nome'] = ucwords($this->input->post('nome'));
-            $data['email'] = strtolower($this->input->post('email'));
-
+            $data['senha'] = $this->input->post('senha');
+            $data['email'] = strtolower($this->input->post('email')); 
+            $data['foto'] = $this->input->post('foto');
+            $data['telefone'] = $this->input->post('telefone');
             /* Carrega o modelo */
             //$this->load->model('usuarios_model');
-
             /* Executa a função atualizar do modelo passando como parâmetro os dados obtidos do formulário */
             if ($this->usuarios_model->atualizar($data)) {
                 /* Caso sucesso ao atualizar, recarrega a página principal */
@@ -139,20 +123,17 @@ class Usuarios extends CI_Controller {
     }
 
     function deletar($idUsuario) {
-
         /* Carrega o modelo */
         //$this->load->model('pessoas_model');
-
-        /* Executa a fun��o deletar do modelo passando como par�metro o id da pessoa */
+        /* Executa a função deletar do modelo passando como parâmetro o id da pessoa */
         if ($this->usuarios_model->deletar($idUsuario)) {
-            /* Caso sucesso ao atualizar, recarrega a p�gina principal */
+            /* Caso sucesso ao atualizar, recarrega a página principal */
             redirect('usuarios');
         } else {
-            /* Sen�o exibe a mensagem de erro */
+            /* Senão exibe a mensagem de erro */
             log_message('error', 'Erro ao deletar o usuário.');
         }
     }
-
 }
 /* End of file usuarios.php*/
 /* Location ./application/controllers/usuarios.php */

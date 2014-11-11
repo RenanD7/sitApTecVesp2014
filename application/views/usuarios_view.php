@@ -2,12 +2,10 @@
 <html lang="pt-BR">
     <head>
         <title><?php echo $titulo; ?></title>
-        
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>assets/css/estilo.css"/>
     </head>
     <body>
         <?php echo form_open('usuarios/inserir', 'id="form-pessoas"'); ?>
-
         <label for="nome">Nome:</label><br/>
         <input type="text" name="nome" value="<?php echo set_value('nome'); ?>"/>
         <div class="error"><?php echo form_error('nome'); ?></div>
