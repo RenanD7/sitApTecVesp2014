@@ -8,7 +8,6 @@
 <body>
 	<?php echo form_open('usuarios/atualizar', 'id="form-pessoas"'); ?>
     
-    
 	<input type="hidden" name="idusuario" value="<?php echo $dados_usuario[0]->idUsuario; ?>"/>
  
 	<label for="nome">Nome:</label><br/>
@@ -32,7 +31,6 @@
 	<div class="error"><?php echo form_error('telefone'); ?></div>
  
 	<input type="submit" name="atualizar" value="Atualizar" />
- 
 	<?php echo form_close(); ?>
 </body>
 </html>

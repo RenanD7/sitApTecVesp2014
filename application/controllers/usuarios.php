@@ -4,6 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Usuarios extends CI_Controller {
+
     function __construct() {
         parent::__construct();
         /* Carrega o modelo */
@@ -11,9 +12,13 @@ class Usuarios extends CI_Controller {
     }
 
     function index() {
-        $data['titulo'] = "CRUD com CodeIgniter | Cadastro de Usuarios";
+        //$data['titulo'] = "CRUD com CodeIgniter | Cadastro de Usuarios";
         $data['usuarios'] = $this->usuarios_model->listar();
-        $this->load->view('usuarios_view.php', $data);
+        //$this->load->view('usuarios_view.php', $data);
+
+        $this->load->view('home_header');
+        $this->load->view('home_content_usuario', $data);
+        $this->load->view('home_sidebar');
     }
 
     function inserir() {
@@ -51,13 +56,16 @@ class Usuarios extends CI_Controller {
 
     function editar($idUsuario) {
         /* Aqui vamos definir o titulo da página de edição */
-        $data['titulo'] = "CRUD com CodeIgniter | Editar Usuario";
+        //$data['titulo'] = "CRUD com CodeIgniter | Editar Usuario";
         /* Carrega o modelo */
         //$this->load->model('usuarios_model');
         /* Busca os dados da pessoa que será editada (id) */
         $data['dados_usuario'] = $this->usuarios_model->editar($idUsuario);
-        /* Carrega a p�gina de edi��o com os dados da pessoa */
-        $this->load->view('usuarios_edit', $data);
+        /* Carrega a página de edição com os dados da pessoa */
+        
+        $this->load->view('home_header');
+        $this->load->view('home_content_usuario_edit', $data);
+        $this->load->view('home_sidebar');
     }
 
     function atualizar() {
@@ -98,7 +106,7 @@ class Usuarios extends CI_Controller {
         /* Executa a valida��o... */
         if ($this->form_validation->run() === FALSE) {
             /* Caso houver erro chama função editar do controlador novamente */
-           // echo 'falho a validação: ' . $this->input->post('idusuario') . $this->input->post('nome'); die();
+            // echo 'falho a validação: ' . $this->input->post('idusuario') . $this->input->post('nome'); die();
             $this->editar($this->input->post('idusuario'));
         } else {
             /* Senão obtém os dados do formulário */
@@ -106,7 +114,7 @@ class Usuarios extends CI_Controller {
             $data['idUsuario'] = $this->input->post('idusuario');
             $data['nome'] = ucwords($this->input->post('nome'));
             $data['senha'] = $this->input->post('senha');
-            $data['email'] = strtolower($this->input->post('email')); 
+            $data['email'] = strtolower($this->input->post('email'));
             $data['foto'] = $this->input->post('foto');
             $data['telefone'] = $this->input->post('telefone');
             /* Carrega o modelo */
@@ -134,6 +142,8 @@ class Usuarios extends CI_Controller {
             log_message('error', 'Erro ao deletar o usuário.');
         }
     }
+
 }
+
 /* End of file usuarios.php*/
 /* Location ./application/controllers/usuarios.php */
