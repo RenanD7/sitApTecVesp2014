@@ -49,7 +49,7 @@
             <div class="error"><?php echo form_error('email'); ?></div>
 
             <label for="foto">Foto:</label><br/>
-            <input type="text" name="foto" value="<?php echo set_value('foto'); ?>"/>
+            <input type="file" name="foto" value="<?php echo set_value('foto'); ?>"/>
             <div class="error"><?php echo form_error('foto'); ?></div>
 
             <label for="telefone">Telefone:</label><br/>

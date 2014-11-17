@@ -40,6 +40,8 @@
 
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
+// Adicionar a seguinte rota para url login
+$route['login'] = 'login/login';
 
 
 /* End of file routes.php */
