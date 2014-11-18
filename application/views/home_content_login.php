@@ -10,7 +10,7 @@
                         if they get too long. You can also remove the <p> entirely if you don't
                         need a subtitle.
                 -->
-                <h2><a href="#">Alteração de Cadastro de Usuário</a></h2>
+                <h2><a href="#">Login de Usuário</a></h2>
                 <!-- <p>A free, fully responsive HTML5 site template by HTML5 UP</p>-->
             </header>
             <div class="info">
@@ -35,33 +35,19 @@
                 </ul>
                 -->
             </div><!-- Info-->
-            <?php echo form_open('usuarios/atualizar', 'id="form-pessoas"'); ?>
-
-            <input type="hidden" name="idusuario" value="<?php echo $dados_usuario[0]->idUsuario; ?>"/>
-
-            <label for="nome">Nome:</label><br/>
-            <input type="text" name="nome" value="<?php echo $dados_usuario[0]->nome; ?>"/>
-            <div class="error"><?php echo form_error('nome'); ?></div>
-
-            <label for="senha">Senha:</label><br/>
-            <input type="password" name="senha" value="<?php echo $dados_usuario[0]->senha; ?>"/>
-            <div class="error"><?php echo form_error('senha'); ?></div>
-
-            <label for="email">Email:</label><br/>
-            <input type="email" name="email" value="<?php echo $dados_usuario[0]->email; ?>"/>
-            <div class="error"><?php echo form_error('email'); ?></div>
-
-            <label for="foto">Foto:</label><br/>
-            <input type="file" name="foto" value="<?php echo $dados_usuario[0]->foto; ?>"/>
-            <div class="error"><?php echo form_error('foto'); ?></div>
-
-            <label for="telefone">Telefone:</label><br/>
-            <input type="tel" name="telefone" value="<?php echo $dados_usuario[0]->telefone; ?>"/>
-            <div class="error"><?php echo form_error('telefone'); ?></div>
-
-            <input type="submit" name="atualizar" value="Atualizar" />
-            <?php echo form_close(); ?>
-
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <?php echo validation_errors(); ?>
+            <?php echo form_open('verifylogin'); ?>
+            <label for="nome">Nome:</label>
+            <input type="text" size="20" id="nome" name="nome"/>
+            <br/>
+            <label for="senha">Senha:</label>
+            <input type="password" size="20" id="senha" name="senha"/>
+            <br/>
+            <input type="submit" value="Efetuar Login"/>
+            </form>
+            </body>
+            </html>
         </article>
 
 

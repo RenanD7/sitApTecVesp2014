@@ -10,6 +10,7 @@ class Uploadify_v3 extends CI_Controller
         parent::__construct();
     }
  
+    private $upload_config;
     public function index()
     {
         $this->load->helper(array('url', 'form'));

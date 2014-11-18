@@ -10,7 +10,7 @@
                         if they get too long. You can also remove the <p> entirely if you don't
                         need a subtitle.
                 -->
-                <h2><a href="#">Alteração de Cadastro de Usuário</a></h2>
+                <h2><a href="#">Cadastro de Usuário</a></h2>
                 <!-- <p>A free, fully responsive HTML5 site template by HTML5 UP</p>-->
             </header>
             <div class="info">
@@ -35,33 +35,36 @@
                 </ul>
                 -->
             </div><!-- Info-->
-            <?php echo form_open('usuarios/atualizar', 'id="form-pessoas"'); ?>
+            <?php
+            if (!defined('BASEPATH'))
+                exit('No direct script access allowed');
+            session_start(); //we need to call PHP's session object to access it through CI
 
-            <input type="hidden" name="idusuario" value="<?php echo $dados_usuario[0]->idUsuario; ?>"/>
+            class Home extends CI_Controller {
 
-            <label for="nome">Nome:</label><br/>
-            <input type="text" name="nome" value="<?php echo $dados_usuario[0]->nome; ?>"/>
-            <div class="error"><?php echo form_error('nome'); ?></div>
+                function __construct() {
+                    parent::__construct();
+                }
 
-            <label for="senha">Senha:</label><br/>
-            <input type="password" name="senha" value="<?php echo $dados_usuario[0]->senha; ?>"/>
-            <div class="error"><?php echo form_error('senha'); ?></div>
+                function index() {
+                    if ($this->session->userdata('logged_in')) {
+                        $session_data = $this->session->userdata('logged_in');
+                        $data['nome'] = $session_data['nome'];
+                        $this->load->view('home_view', $data);
+                    } else {
+                        //If no session, redirect to login page
+                        redirect('login', 'refresh');
+                    }
+                }
 
-            <label for="email">Email:</label><br/>
-            <input type="email" name="email" value="<?php echo $dados_usuario[0]->email; ?>"/>
-            <div class="error"><?php echo form_error('email'); ?></div>
+                function logout() {
+                    $this->session->unset_userdata('logged_in');
+                    session_destroy();
+                    redirect('home', 'refresh');
+                }
 
-            <label for="foto">Foto:</label><br/>
-            <input type="file" name="foto" value="<?php echo $dados_usuario[0]->foto; ?>"/>
-            <div class="error"><?php echo form_error('foto'); ?></div>
-
-            <label for="telefone">Telefone:</label><br/>
-            <input type="tel" name="telefone" value="<?php echo $dados_usuario[0]->telefone; ?>"/>
-            <div class="error"><?php echo form_error('telefone'); ?></div>
-
-            <input type="submit" name="atualizar" value="Atualizar" />
-            <?php echo form_close(); ?>
-
+            }
+            ?>
         </article>
 
 

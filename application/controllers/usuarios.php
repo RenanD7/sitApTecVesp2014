@@ -9,6 +9,7 @@ class Usuarios extends CI_Controller {
         parent::__construct();
         /* Carrega o modelo */
         $this->load->model('usuarios_model');
+        $this->load->library('form_validation');
     }
 
     function index() {
@@ -23,7 +24,7 @@ class Usuarios extends CI_Controller {
 
     function inserir() {
         /* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
-        $this->load->library('form_validation');
+       
         /* Define as tags onde a mensagem de erro sera exibida na página */
         $this->form_validation->set_error_delimiters('<span>', '</span>');
         /* Define as regras para valida��o */

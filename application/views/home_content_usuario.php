@@ -58,6 +58,7 @@
 
             <input type="submit" name="cadastrar" value="Cadastrar" />
             <?php echo form_close(); ?>
+            
 
             <!-- Lista as Pessoas Cadastradas -->
             <div id="grid-pessoas">
