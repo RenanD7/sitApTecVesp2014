@@ -43,6 +43,10 @@ $route['404_override'] = '';
 // Adicionar a seguinte rota para url login
 //$route['login'] = 'login/login';
 
+//$route['news/(:any)'] = 'news/view/$1';
+//$route['news'] = 'news';
+//$route['(:any)'] = 'pages/view/$1';
+//$route['default_controller'] = 'pages/view';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
