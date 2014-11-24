@@ -11,16 +11,17 @@ class Login extends CI_Controller {
 
     function index() {
 
+
         // VALIDATION RULES
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('senha', 'Senha', 'required');
+        $this->form_validation->set_error_delimiters('<span>', '</span>');
 
 
-        // MODELO MEMBERSHIP
-        //$this->load->model('membership_model', 'membership');
-        $query = $this->membership->validate();
+        // MODELO LOGIN
+        $this->load->model('login_model', 'login');
+        $query = $this->login->validar();
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -32,15 +33,29 @@ class Login extends CI_Controller {
 
             if ($query) { // VERIFICA LOGIN E SENHA
                 $data = array(
-                    'username' => $this->input->post('username'),
-                    'logged' => true
+                    'email' => $this->input->post('email'),
+                    'logado' => true
                 );
                 $this->session->set_userdata($data);
-                redirect('login/area_restrita');
+                //echo"[DEBUG] LOGOU LOGOU!";
+                //echo"<a href='" . base_url('login/sair') . "'>Sair</a>";
+                //die();
+                redirect('noticias');
             } else {
-                redirect($this->index());
+                //Looping
+                //echo "[DEBUG]: Não logou!";
+                //Causando looping infinito
+                redirect(base_url('login'));
+                //header("Location: http://127.0.0.1/sitApTecVesp2014/login");
             }
         }
+    }
+
+    function sair() {
+        $this->session->unset_userdata('logado');
+        $this->session->unset_userdata('email');
+        $this->session->sess_destroy();
+        redirect(base_url('login'));
     }
 
 }

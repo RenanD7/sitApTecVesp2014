@@ -10,7 +10,9 @@
                         if they get too long. You can also remove the <p> entirely if you don't
                         need a subtitle.
                 -->
-                <h2><a href="#">Sistema de Login</a></h2>
+                <h2><a href="#">Cadastro de Noticia</a></h2>
+                <p>Abaixo vai o formulário de cadastro de notícia</p>
+                <p><a href="<?= base_url('login/sair')?>">Sair</a></p>
                 <!-- <p>A free, fully responsive HTML5 site template by HTML5 UP</p>-->
             </header>
             <div class="info">
@@ -35,7 +37,7 @@
                 </ul>
                 -->
             </div><!-- Info-->
-            <?php echo form_open('login', 'id="form-login"'); ?>
+            <?php echo form_open('login', 'id="form-noticia"'); ?>
             <label for="email">Email:</label><br/>
             <input type="text" name="email" value="<?php echo set_value('email'); ?>"/>
             <div class="error"><?php echo form_error('email'); ?></div>
