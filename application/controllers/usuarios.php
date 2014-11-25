@@ -41,8 +41,40 @@ class Usuarios extends CI_Controller {
             $data['nome'] = $this->input->post('nome');
             $data['senha'] = $this->input->post('senha');
             $data['email'] = $this->input->post('email');
-            $data['foto'] = $this->input->post('foto');
             $data['telefone'] = $this->input->post('telefone');
+            
+            /*
+             * Envio da imagem
+             */
+            $config['upload_path'] = './assets/images/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '800';
+            $config['max_width'] = '1024';
+            $config['max_height'] = '768';
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload()) {
+                $error = array('error' => $this->upload->display_errors());
+
+                $this->load->view('upload_form', $error);
+                
+                $this->load->view('home_header');
+                $this->load->view('home_content_usuario', $error);
+                $this->load->view('home_sidebar');
+            
+                
+            } else {//Arquivo enviado!
+                //$data = array('upload_data' => $this->upload->data());
+                //$this->load->view('upload_success', $data);
+                
+                $foto = $this->upload->data();
+                //var_dump($foto); die();
+                $data['foto'] = $foto['file_name'];
+            }
+
+            //FIM DO ENVIO DA IMAGEM
+
             /* Carrega o modelo */
             //$this->load->model('usuarios_model');
             /* Chama a função inserir do modelo */
@@ -62,7 +94,7 @@ class Usuarios extends CI_Controller {
         /* Busca os dados da pessoa que será editada (id) */
         $data['dados_usuario'] = $this->usuarios_model->editar($idUsuario);
         /* Carrega a página de edição com os dados da pessoa */
-        
+
         $this->load->view('home_header');
         $this->load->view('home_content_usuario_edit', $data);
         $this->load->view('home_sidebar');
