@@ -35,7 +35,7 @@
                 </ul>
                 -->
             </div><!-- Info-->
-            <?php echo form_open('usuarios/atualizar', 'id="form-pessoas"'); ?>
+            <?php echo form_open_multipart('usuarios/atualizar', 'id="form-pessoas"'); ?>
 
             <input type="hidden" name="idusuario" value="<?php echo $dados_usuario[0]->idUsuario; ?>"/>
 
@@ -52,8 +52,9 @@
             <div class="error"><?php echo form_error('email'); ?></div>
 
             <label for="foto">Foto:</label><br/>
-            <input type="text" name="foto" value="<?php echo $dados_usuario[0]->foto; ?>"/>
+            <input type="file" name="userfile" value=""/>
             <div class="error"><?php echo form_error('foto'); ?></div>
+            <img src="<?php echo base_url("assets/imagems/" . $dados_usuario[0]->foto); ?>"/>
 
             <label for="telefone">Telefone:</label><br/>
             <input type="tel" name="telefone" value="<?php echo $dados_usuario[0]->telefone; ?>"/>

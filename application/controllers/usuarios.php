@@ -42,7 +42,20 @@ class Usuarios extends CI_Controller {
             $data['senha'] = $this->input->post('senha');
             $data['email'] = $this->input->post('email');
             $data['telefone'] = $this->input->post('telefone');
+            $data['foto'] = $this->doupload('foto');
             
+            /* Carrega o modelo */
+            //$this->load->model('usuarios_model');
+            /* Chama a função inserir do modelo */
+            if ($this->usuarios_model->inserir($data)) {
+                redirect('usuarios');
+            } else {
+                log_message('error', 'Erro ao inserir o usuário.');
+            }
+        }
+    }
+    
+    function doupload() {
             /*
              * Envio da imagem
              */
@@ -57,12 +70,14 @@ class Usuarios extends CI_Controller {
             if (!$this->upload->do_upload()) {
                 $error = array('error' => $this->upload->display_errors());
 
-                $this->load->view('upload_form', $error);
+                //$this->load->view('upload_form', $error);
                 
-                $this->load->view('home_header');
-                $this->load->view('home_content_usuario', $error);
-                $this->load->view('home_sidebar');
-            
+                //$this->load->view('home_header');
+                //$this->load->view('home_content_usuario', $error);
+                //$this->load->view('home_sidebar');
+                
+                //Arquivo Inváldo
+                return false;
                 
             } else {//Arquivo enviado!
                 //$data = array('upload_data' => $this->upload->data());
@@ -70,22 +85,11 @@ class Usuarios extends CI_Controller {
                 
                 $foto = $this->upload->data();
                 //var_dump($foto); die();
-                $data['foto'] = $foto['file_name'];
-            }
-
-            //FIM DO ENVIO DA IMAGEM
-
-            /* Carrega o modelo */
-            //$this->load->model('usuarios_model');
-            /* Chama a função inserir do modelo */
-            if ($this->usuarios_model->inserir($data)) {
-                redirect('usuarios');
-            } else {
-                log_message('error', 'Erro ao inserir o usuário.');
+                return $foto['file_name'];
             }
         }
-    }
-
+            //FIM DO ENVIO DA IMAGEM
+        
     function editar($idUsuario) {
         /* Aqui vamos definir o titulo da página de edição */
         //$data['titulo'] = "CRUD com CodeIgniter | Editar Usuario";
@@ -147,8 +151,14 @@ class Usuarios extends CI_Controller {
             $data['nome'] = ucwords($this->input->post('nome'));
             $data['senha'] = $this->input->post('senha');
             $data['email'] = strtolower($this->input->post('email'));
-            $data['foto'] = $this->input->post('foto');
             $data['telefone'] = $this->input->post('telefone');
+            //$data['foto'] = $this->input->post('foto');
+            
+            if($this->doupload()){
+                $data['foto'] = $this->do_upload();
+            }
+            
+            
             /* Carrega o modelo */
             //$this->load->model('usuarios_model');
             /* Executa a função atualizar do modelo passando como parâmetro os dados obtidos do formulário */
