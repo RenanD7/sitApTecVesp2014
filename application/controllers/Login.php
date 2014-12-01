@@ -40,7 +40,7 @@ class Login extends CI_Controller {
                 //echo"[DEBUG] LOGOU LOGOU!";
                 //echo"<a href='" . base_url('login/sair') . "'>Sair</a>";
                 //die();
-                redirect('noticias');
+                redirect('noticias/cadastro');
             } else {
                 //Looping
                 //echo "[DEBUG]: Não logou!";
